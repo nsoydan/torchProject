@@ -1,20 +1,49 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { CameraView, CameraType, useCameraPermissions, Camera, } from 'expo-camera';
+import React, { useState } from 'react';
+import { TouchableOpacity, Text, View, Alert, StyleSheet } from 'react-native';
 
-export default function App() {
+const App = () => {
+
+  const [flash,setFlash]=useState(false);
+
+  const handlePress = () => {
+    const currentTime= new Date().getTime();
+    //Alert.alert('Geçerli Zaman', `Milisaniye cinsinden: ${currentTime}`);
+    setFlash(!flash)
+    
+    
+  };
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <TouchableOpacity style={styles.button} onPress={handlePress}>
+        <Text style={styles.buttonText}>{flash?"OFF":"ON"}</Text>
+      </TouchableOpacity>
+      <CameraView flash='on' enableTorch={flash}/>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  button: {
+    backgroundColor: '#007BFF',
+    padding: 10,
+    borderRadius: 5,
+    height:150,
+    width:150,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 50,
   },
 });
+
+export default App;
